@@ -1,0 +1,315 @@
+* {
+  box-sizing: border-box;
+  user-select: none;     /* Evita la selección de texto o elementos */
+  -webkit-user-select: none; /* Compatibilidad con Safari */
+  -moz-user-select: none;    /* Compatibilidad con Firefox */
+  -ms-user-select: none;     /* Compatibilidad con Edge */
+}
+
+body, html {
+  margin: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+  color: #fff;
+  overflow: hidden;
+  background-image: url('wallpaper/fondo003.jpg');
+  background-size: cover;
+  /*
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+    height: 100vh;
+    margin: 0;*/
+  
+}
+
+#dock {
+  position: fixed;
+  bottom: 35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(254, 254, 254, 1);
+  backdrop-filter: blur(40px);
+  border-radius: 120px;
+  padding: 4px 30px 0px 30px;
+  display: flex;
+  gap: 26px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.5);
+  /*border: 1px solid #ffffff;*/
+  border: 1px solid #000000;
+  z-index: 1000;
+  height: 9px;
+  align-items: center;
+}
+
+.icon {
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  
+}
+.icon:hover {
+  transform: scale(1.3);
+}
+
+.ventana {
+  position: absolute;
+  /* Eliminar dimensiones fijas aquí. Se definirán por las clases específicas (.ventana-terminal, .ventana-navegador, etc.) o por la animación. */
+  background: rgba(254, 254, 254, 0.95);
+  border: 1px solid rgba(255,255,255);
+  border-radius: 20px;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+  /* ELIMINAR top: 50px; y left: 50px; */
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  z-index: 500;
+  cursor: default; 
+  
+  /* ESTADO INICIAL CERRADO/OCULTO */
+  opacity: 0; 
+  width: 0px;   /* Añadido: Inicia con ancho cero */
+  height: 0px;  /* Añadido: Inicia con alto cero */
+  
+  top: var(--end-y);
+  left: var(--end-x); /* Será 50% */
+  /* ESTA ES LA CLAVE PARA EL CENTRADO HORIZONTAL */
+  transform: translate(-50%, -50%);
+  
+}
+    
+.ventana header {
+  background: #fff;
+  padding: 18px 18px;
+  color: #707070;
+  font-size: 10px; /* Cambiado de 0px a 14px */
+  display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    flex-shrink: 1; /* Añadir: Previene que el header se encoja */
+	z-index: 2;
+
+	  
+}
+
+.ventana .cabeza {
+	height: 50px;
+	background: #ff0000;
+}
+
+.ventana .contenido {
+  padding: 0px; 
+  color: #707070;
+  font-size: 0px; 
+  flex-grow: 1;
+  overflow: auto; 
+  position: relative;
+  
+}
+
+
+/* Entrada (Apertura) - MODIFICADA */
+.ventana-opening {
+    animation: ventana-open-from-dock 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+}
+
+@keyframes ventana-open-from-dock {
+    from {
+        top: var(--start-y, 50%);
+        left: var(--start-x, 50%);
+        width: 0px;
+        height: 0px;
+        opacity: 0;
+        /* El -50% -50% aquí centra la animación sobre el punto del Dock */
+        transform: translate(-50%, -50%) scale(0.1); 
+        border-radius: 50%;
+    }
+    50% {
+        opacity: 0.8;
+        border-radius: 120px;
+    }
+    to {
+        /* ESTADO FINAL: Usar las variables CSS para la posición final absoluta */
+        top: var(--end-y, 50px); 
+        left: var(--end-x, 50px); 
+        /* Usar las variables CSS para las dimensiones finales */
+        width: var(--final-width, 700px); 
+        height: var(--final-height, 450px);
+        opacity: 1;
+        /* ⬅️ CAMBIO: Asegúrate de que el transform final sea solo el centrado horizontal */
+        transform: translateX(-50%, -50%); 
+        border-radius: 20px;
+    }
+}
+
+/* Salida (Cierre) - MODIFICADA */
+.ventana-closing {
+    animation: ventana-close-to-dock 0.3s cubic-bezier(0.65, 0.05, 0.36, 1) forwards !important;
+    pointer-events: none;
+}
+
+@keyframes ventana-close-to-dock {
+    from {
+        /* ESTADO INICIAL: Usar las variables CSS para las dimensiones y posición inicial de cierre */
+        top: var(--end-y, 50px); 
+        left: var(--end-x, 50px); 
+        width: var(--final-width, 700px);
+        height: var(--final-height, 450px);
+        opacity: 1;
+        /* ⬅️ CAMBIO: Asegúrate de que el transform inicial sea solo el centrado horizontal */
+        transform: translateX(-50%, -50%); 
+    }
+    50% {
+        opacity: 0.8;
+    }
+    to {
+        top: var(--start-y, 50%); 
+        left: var(--start-x, 50%); 
+        width: 0px;
+        height: 0px;
+        opacity: 0;
+        /* El -50% -50% centra la animación de cierre sobre el punto del Dock */
+        transform: translate(-50%, -50%) scale(0.1);
+        border-radius: 20px;
+    }
+}
+
+
+
+
+
+
+/* -------------------------------------- */
+/* 1. ESTILO TERMINAL */
+.ventana-terminal {
+  width: 750px;
+  height: 450px;
+  background: rgba(254, 254, 254, 0.8);
+  padding: 25px;
+}
+.ventana-terminal .contenido {
+  padding: 0;
+  flex-grow: 1;
+}
+
+/* Contenedor para que xterm.js se ajuste */
+.ventana-terminal .terminal-container {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: -42px;
+  left: 0;
+  /* AJUSTE: El padding ya no necesita el extra de la barra de arrastre/cierre */
+  padding: 10px; 
+  
+}
+
+
+/* 2. ESTILO NAVEGADOR */
+.ventana-navegador {
+  width: 1300px;
+  height: 750px;
+  background: #fff;
+  background-image: none;
+}
+.ventana-navegador .contenido {
+	padding: 0;
+}
+
+/* AJUSTE NAVEGADOR */
+
+
+.browser {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  box-shadow: none;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+.address-bar {
+  flex: 1;
+  padding: 22px 32px;
+  border: 1px solid white;
+  border-radius: 35px;
+  font-size: 14px;
+  outline: none;
+  color: #999;
+  position: absolute;
+  bottom: 5%;
+  width: 545px;
+  left: 50%;
+  transform: translateX(-50%);
+	box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+	text-align: center;
+	background: rgba(254, 254, 254, 0.95);
+	z-index: 10;
+}
+.browser-frame {
+  flex: ; 
+  border: none;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+    top: 0;
+    left: 0;
+	z-index: 1;
+}
+input::placeholder {
+	color: #ddd;
+}
+
+
+/* 3. ESTILO ARCHIVOS */
+.ventana-archivos {
+  width: 1080px;
+  height: 620px;
+  background: rgba(254, 254, 254, 0.95);
+  padding: 25px;
+}
+
+/* ================================================= */
+/* MEDIA QUERIES PARA RESPONSIVIDAD */
+/* ================================================= */
+
+/* Ajustes para pantallas medianas (e.g., Laptops grandes/Tablets horizontales) */
+@media (max-width: 1400px) {
+
+    /* 1. Ajustar el DOCK */
+    #dock {
+        padding: 4px 25px 0px 25px; /* Reducir el padding */
+        gap: 18px; /* Reducir el espacio entre íconos */
+    }
+
+    .icon img {
+        width: 60px; /* Reducir el tamaño de la imagen del ícono */
+        height: 60px;
+    }
+
+    /* 2. Reducir el tamaño de las ventanas */
+    /* Navegador: de 1300x750 a 1000x650 */
+    .ventana-navegador {
+        width: 1000px;
+        height: 550px;
+    }
+    
+    /* Terminal: de 750x450 a 600x400 */
+    .ventana-terminal {
+        width: 600px;
+        height: 400px;
+    }
+
+    /* Archivos: de 1080x620 a 850x550 */
+    .ventana-archivos {
+        width: 850px;
+        height: 550px;
+    }
+    
+    /* Ajustar la barra de direcciones del navegador */
+    .address-bar {
+        width: 450px;
+        font-size: 13px;
+    }
+}
+
+/* ------------------------------------------------- */
