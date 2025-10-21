@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Sistema OS</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="widgets/widgets-player.css">
+</head>
+<body>
+  <div id="desktop">
+    <div id="dock">
+      <div class="icon" onclick="abrirVentana('Terminal')"><img src="icon/terminalwhite.png" width="70" height="70" alt="Terminal"></div>
+      <div class="icon" onclick="abrirVentana('Navegador')"><img src="icon/navegador003.png" width="70" height="70" alt="Navegador"></div>
+      <div class="icon" onclick="abrirVentana('Archivos')"><img src="icon/archivo001.png" width="70" height="70" alt="Archivos"></div>
+    </div>
+
+    <div id="ventanas"></div>
+	
+	<div id="widgets-container"></div>
+  </div>
+  
+  <script src="https://unpkg.com/@xterm/xterm/lib/xterm.js"></script>
+
+  <script src="main.js"></script>
+  <script src="widgets/widget-player.js"></script>
+</body>
+</html>
