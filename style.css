@@ -21,7 +21,7 @@ body, html {
   
 }
 
-#bar {
+#antenna {
   position: fixed;
   bottom: 35px;
   left: 50%;
@@ -108,10 +108,10 @@ body, html {
 
 /* Entrada (Apertura) - MODIFICADA */
 .ventana-opening {
-    animation: ventana-open-from-bar 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    animation: ventana-open-from-antenna 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
-@keyframes ventana-open-from-bar {
+@keyframes ventana-open-from-antenna {
     from {
         top: var(--start-y, 50%);
         left: var(--start-x, 50%);
@@ -142,11 +142,11 @@ body, html {
 
 /* Salida (Cierre) - MODIFICADA */
 .ventana-closing {
-    animation: ventana-close-to-bar 0.3s cubic-bezier(0.65, 0.05, 0.36, 1) forwards !important;
+    animation: ventana-close-to-antenna 0.3s cubic-bezier(0.65, 0.05, 0.36, 1) forwards !important;
     pointer-events: none;
 }
 
-@keyframes ventana-close-to-bar {
+@keyframes ventana-close-to-antenna {
     from {
         /* ESTADO INICIAL: Usar las variables CSS para las dimensiones y posición inicial de cierre */
         top: var(--end-y, 50px); 
@@ -197,7 +197,7 @@ body, html {
   position: absolute;
   top: -42px;
   left: 0;
-  /* AJUSTE: El padding ya no necesita el extra de la barra de arrastre/cierre */
+  /* AJUSTE: El padding ya no necesita el extra de la antennara de arrastre/cierre */
   padding: 10px; 
   
 }
@@ -227,7 +227,7 @@ body, html {
   flex-direction: column;
   position: relative;
 }
-.address-bar {
+.address-antenna {
   flex: 1;
   padding: 22px 32px;
   border: 1px solid white;
@@ -276,7 +276,7 @@ input::placeholder {
 @media (max-width: 1400px) {
 
     /* 1. Ajustar el DOCK */
-    #bar {
+    #antenna {
         padding: 4px 25px 0px 25px; /* Reducir el padding */
         gap: 18px; /* Reducir el espacio entre íconos */
     }
@@ -305,8 +305,8 @@ input::placeholder {
         height: 550px;
     }
     
-    /* Ajustar la barra de direcciones del navegador */
-    .address-bar {
+    /* Ajustar la antennara de direcciones del navegador */
+    .address-antenna {
         width: 450px;
         font-size: 13px;
     }

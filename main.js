@@ -17,7 +17,7 @@ function obtenerContenido(nombre) {
     return `
       <div class="browser">
         <iframe class="browser-frame" src="${paginaLocal}"></iframe>
-          <input type="text" class="address-bar" placeholder="https://example.com" value="https://example.com">
+          <input type="text" class="address-antenna" placeholder="https://example.com" value="https://example.com">
       </div>
     `;
   } else if (nombre === 'Terminal') {
@@ -44,8 +44,8 @@ function obtenerContenido(nombre) {
             <button class="player-next-btn" data-ventana-id="${contador}"><img src="apps/reproductor/siguiente.png" width="32px"></button>
           </div>
           
-          <div class="progress-bar-container">
-            <input type="range" min="0" max="100" value="0" class="progress-bar" id="player-progress-${contador}">
+          <div class="progress-antenna-container">
+            <input type="range" min="0" max="100" value="0" class="progress-antenna" id="player-progress-${contador}">
           </div>
         </div>
       `;
@@ -94,25 +94,25 @@ function abrirVentana(nombre) {
   // LÓGICA DE CIERRE SI YA ESTÁ ABIERTA
   if (ventanasAbiertas[nombre]) {
       const ventanaExistente = ventanasAbiertas[nombre];
-      const iconoElement = document.querySelector(`#bar .icon img[alt="${nombre}"]`)?.parentElement;
+      const iconoElement = document.querySelector(`#antenna .icon img[alt="${nombre}"]`)?.parentElement;
       cerrarVentana(ventanaExistente, iconoElement);
       return; 
   }
   
   // OBTENER COORDENADAS DEL ÍCONO Y DE LA POSICIÓN FINAL
-  const iconoElement = document.querySelector(`#bar .icon img[alt="${nombre}"]`)?.parentElement;
+  const iconoElement = document.querySelector(`#antenna .icon img[alt="${nombre}"]`)?.parentElement;
   if (!iconoElement) {
       console.error(`Ícono no encontrado para: ${nombre}. Asegúrate que alt="${nombre}" existe en index.html.`);
       return;
   }
-  const barCenter = getElementCenterCoords(iconoElement);
+  const antennaCenter = getElementCenterCoords(iconoElement);
 
   // 1. Obtener las dimensiones finales desde el CSS
   const finalDimensions = getFinalWindowDimensions(nombre);
 
   // 2. Definir la posición final: top 25px, left 50% (centrado)
-  const finalTop = '50%'; // ⬅️ CAMBIO: Fijo a 25px
-  const finalLeft = '50%'; // ⬅️ CAMBIO: Fijo a '50%' (requiere CSS adicional para centrar)
+  const finalTop = '50%'; 
+  const finalLeft = '50%'; 
 
     
   const ventana = document.createElement('div');
@@ -125,12 +125,12 @@ function abrirVentana(nombre) {
   ventana.dataset.nombre = nombre;
 
   // 3. ESTABLECER VARIABLES CSS PARA LA ANIMACIÓN
-  ventana.style.setProperty('--start-x', `${barCenter.x}px`);
-  ventana.style.setProperty('--start-y', `${barCenter.y}px`);
+  ventana.style.setProperty('--start-x', `${antennaCenter.x}px`);
+  ventana.style.setProperty('--start-y', `${antennaCenter.y}px`);
   
   // Usamos '50%' y '25px' en las variables CSS
-  ventana.style.setProperty('--end-x', `${finalLeft}`); // ⬅️ CAMBIO
-  ventana.style.setProperty('--end-y', `${finalTop}`); // ⬅️ CAMBIO
+  ventana.style.setProperty('--end-x', `${finalLeft}`); 
+  ventana.style.setProperty('--end-y', `${finalTop}`); 
 
   // Dimensiones finales de la ventana
   ventana.style.setProperty('--final-width', finalDimensions.width);
@@ -143,9 +143,7 @@ function abrirVentana(nombre) {
   const contenidoHTML = obtenerContenido(nombre); 
 
   ventana.innerHTML = `
- <!--<header ondblclick="cerrarVentana(this)">${nombre}</header>-->
-  
-    <div class="contenido">
+ <div class="contenido">
   	
       ${contenidoHTML}
     </div>
@@ -153,14 +151,13 @@ function abrirVentana(nombre) {
   document.getElementById('ventanas').appendChild(ventana);
 
   // 4. INICIAR LA ANIMACIÓN (APERTURA)
-  // La ventana se creará en el DOM con opacity: 0; width: 0; y la animación la escalará a --final-width/height.
   ventana.classList.add('ventana-opening');
   
   // ------------------------------------------------------------------
   // AÑADIR LÓGICA ESPECÍFICA DEL NAVEGADOR
   // ------------------------------------------------------------------
   if (nombre === 'Navegador') {
-    const addressBar = ventana.querySelector('.address-bar');
+    const addressBar = ventana.querySelector('.address-antenna');
     const frame = ventana.querySelector('.browser-frame');
 
     addressBar.addEventListener('keydown', e => {
@@ -209,7 +206,7 @@ function abrirVentana(nombre) {
           term.write('- echo <texto>: Repite el texto.\r\n');
           term.write('- exit: Cierra la ventana.\r\n'); 
         } else if (command === 'exit') {
-            const iconoElement = document.querySelector(`#bar .icon img[alt="${nombre}"]`)?.parentElement;
+            const iconoElement = document.querySelector(`#antenna .icon img[alt="${nombre}"]`)?.parentElement;
             cerrarVentana(ventana, iconoElement);
             return;
         } else if (command.startsWith('echo ')) {
@@ -268,14 +265,14 @@ function cerrarVentana(ventanaElement, iconoElement = null) {
   // 3. ESTABLECER VARIABLES CSS PARA EL CIERRE (si no se pasaron, se buscan)
   if (!iconoElement) {
       // Intentamos encontrar el ícono basado en el nombre de la ventana
-      iconoElement = document.querySelector(`#bar .icon img[alt="${nombreVentana}"]`)?.parentElement;
+      iconoElement = document.querySelector(`#antenna .icon img[alt="${nombreVentana}"]`)?.parentElement;
   }
   
   if (iconoElement) {
-      const barCenter = getElementCenterCoords(iconoElement);
+      const antennaCenter = getElementCenterCoords(iconoElement);
       // 'start-x/y' es el punto final del cierre (el Dock)
-      ventanaElement.style.setProperty('--start-x', `${barCenter.x}px`);
-      ventanaElement.style.setProperty('--start-y', `${barCenter.y}px`);
+      ventanaElement.style.setProperty('--start-x', `${antennaCenter.x}px`);
+      ventanaElement.style.setProperty('--start-y', `${antennaCenter.y}px`);
   }
   
   // 4. Añadir la clase de cierre para la animación
@@ -287,5 +284,48 @@ function cerrarVentana(ventanaElement, iconoElement = null) {
   }, 350); 
 }
 
+// =======================================================
+// LÓGICA DE CIERRE DE TODAS LAS VENTANAS POR DOBLE CLIC
+// =======================================================
 
+// -----------------------------------------------------
+// FUNCIÓN PARA CERRAR TODAS LAS VENTANAS
+// -----------------------------------------------------
+function ocultarTodasLasVentanas() {
+    // 1. Obtener una lista ESTÁTICA de los nombres de las ventanas abiertas.
+    // Esto es crucial para iterar de forma segura mientras 'cerrarVentana' modifica 'ventanasAbiertas'.
+    const nombresAbiertos = Object.keys(ventanasAbiertas);
 
+    // 2. Iterar sobre la lista estática
+    for (const nombre of nombresAbiertos) {
+        // Obtenemos la referencia al elemento de la ventana
+        const ventanaElement = ventanasAbiertas[nombre];
+        
+        if (ventanaElement) {
+            // Buscamos el ícono correspondiente para la animación al Dock (si existe)
+            const iconoElement = document.querySelector(`#antenna .icon img[alt="${nombre}"]`)?.parentElement;
+            
+            // Llamamos a tu función de cierre
+            // 'cerrarVentana' se encargará de eliminar la entrada de ventanasAbiertas
+            cerrarVentana(ventanaElement, iconoElement);
+        }
+    }
+}
+
+// -----------------------------------------------------
+// EVENTO DOBLE CLIC EN EL ESCRITORIO
+// -----------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    // Obtenemos el contenedor principal que representa el escritorio
+    const desktop = document.getElementById('desktop'); 
+    
+    // Asignamos el evento dblclick al contenedor principal.
+    desktop.addEventListener('dblclick', (e) => {
+        // Ejecutamos la función solo si el elemento clicado (e.target) es:
+        // 1. El propio elemento con id="desktop" (el fondo vacío).
+        // 2. O el body (por si el evento se propaga hasta el fondo más absoluto).
+        if (e.target.id === 'desktop' || e.target.tagName === 'BODY') {
+            ocultarTodasLasVentanas();
+        }
+    });
+});
