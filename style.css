@@ -21,7 +21,7 @@ body, html {
   
 }
 
-#dock {
+#bar {
   position: fixed;
   bottom: 35px;
   left: 50%;
@@ -108,10 +108,10 @@ body, html {
 
 /* Entrada (Apertura) - MODIFICADA */
 .ventana-opening {
-    animation: ventana-open-from-dock 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+    animation: ventana-open-from-bar 0.35s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
 }
 
-@keyframes ventana-open-from-dock {
+@keyframes ventana-open-from-bar {
     from {
         top: var(--start-y, 50%);
         left: var(--start-x, 50%);
@@ -142,11 +142,11 @@ body, html {
 
 /* Salida (Cierre) - MODIFICADA */
 .ventana-closing {
-    animation: ventana-close-to-dock 0.3s cubic-bezier(0.65, 0.05, 0.36, 1) forwards !important;
+    animation: ventana-close-to-bar 0.3s cubic-bezier(0.65, 0.05, 0.36, 1) forwards !important;
     pointer-events: none;
 }
 
-@keyframes ventana-close-to-dock {
+@keyframes ventana-close-to-bar {
     from {
         /* ESTADO INICIAL: Usar las variables CSS para las dimensiones y posición inicial de cierre */
         top: var(--end-y, 50px); 
@@ -276,7 +276,7 @@ input::placeholder {
 @media (max-width: 1400px) {
 
     /* 1. Ajustar el DOCK */
-    #dock {
+    #bar {
         padding: 4px 25px 0px 25px; /* Reducir el padding */
         gap: 18px; /* Reducir el espacio entre íconos */
     }

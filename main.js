@@ -94,18 +94,18 @@ function abrirVentana(nombre) {
   // LÓGICA DE CIERRE SI YA ESTÁ ABIERTA
   if (ventanasAbiertas[nombre]) {
       const ventanaExistente = ventanasAbiertas[nombre];
-      const iconoElement = document.querySelector(`#dock .icon img[alt="${nombre}"]`)?.parentElement;
+      const iconoElement = document.querySelector(`#bar .icon img[alt="${nombre}"]`)?.parentElement;
       cerrarVentana(ventanaExistente, iconoElement);
       return; 
   }
   
   // OBTENER COORDENADAS DEL ÍCONO Y DE LA POSICIÓN FINAL
-  const iconoElement = document.querySelector(`#dock .icon img[alt="${nombre}"]`)?.parentElement;
+  const iconoElement = document.querySelector(`#bar .icon img[alt="${nombre}"]`)?.parentElement;
   if (!iconoElement) {
       console.error(`Ícono no encontrado para: ${nombre}. Asegúrate que alt="${nombre}" existe en index.html.`);
       return;
   }
-  const dockCenter = getElementCenterCoords(iconoElement);
+  const barCenter = getElementCenterCoords(iconoElement);
 
   // 1. Obtener las dimensiones finales desde el CSS
   const finalDimensions = getFinalWindowDimensions(nombre);
@@ -125,8 +125,8 @@ function abrirVentana(nombre) {
   ventana.dataset.nombre = nombre;
 
   // 3. ESTABLECER VARIABLES CSS PARA LA ANIMACIÓN
-  ventana.style.setProperty('--start-x', `${dockCenter.x}px`);
-  ventana.style.setProperty('--start-y', `${dockCenter.y}px`);
+  ventana.style.setProperty('--start-x', `${barCenter.x}px`);
+  ventana.style.setProperty('--start-y', `${barCenter.y}px`);
   
   // Usamos '50%' y '25px' en las variables CSS
   ventana.style.setProperty('--end-x', `${finalLeft}`); // ⬅️ CAMBIO
@@ -209,7 +209,7 @@ function abrirVentana(nombre) {
           term.write('- echo <texto>: Repite el texto.\r\n');
           term.write('- exit: Cierra la ventana.\r\n'); 
         } else if (command === 'exit') {
-            const iconoElement = document.querySelector(`#dock .icon img[alt="${nombre}"]`)?.parentElement;
+            const iconoElement = document.querySelector(`#bar .icon img[alt="${nombre}"]`)?.parentElement;
             cerrarVentana(ventana, iconoElement);
             return;
         } else if (command.startsWith('echo ')) {
@@ -268,14 +268,14 @@ function cerrarVentana(ventanaElement, iconoElement = null) {
   // 3. ESTABLECER VARIABLES CSS PARA EL CIERRE (si no se pasaron, se buscan)
   if (!iconoElement) {
       // Intentamos encontrar el ícono basado en el nombre de la ventana
-      iconoElement = document.querySelector(`#dock .icon img[alt="${nombreVentana}"]`)?.parentElement;
+      iconoElement = document.querySelector(`#bar .icon img[alt="${nombreVentana}"]`)?.parentElement;
   }
   
   if (iconoElement) {
-      const dockCenter = getElementCenterCoords(iconoElement);
+      const barCenter = getElementCenterCoords(iconoElement);
       // 'start-x/y' es el punto final del cierre (el Dock)
-      ventanaElement.style.setProperty('--start-x', `${dockCenter.x}px`);
-      ventanaElement.style.setProperty('--start-y', `${dockCenter.y}px`);
+      ventanaElement.style.setProperty('--start-x', `${barCenter.x}px`);
+      ventanaElement.style.setProperty('--start-y', `${barCenter.y}px`);
   }
   
   // 4. Añadir la clase de cierre para la animación
