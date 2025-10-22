@@ -184,7 +184,7 @@ function abrirVentana(nombre) {
       scrollback: 1000,
 	  fontSize: 14,
 		fontFamily: '"Courier New", monospace',
-      theme: { foreground: '#0AD2FF', cursor: '#AED7FF' },
+      theme: { foreground: '#0AD2FF', cursor: '#FFC683' },
 		wordWrap: true,
     });
     term.open(terminalElement);
