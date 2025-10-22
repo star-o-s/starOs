@@ -1,0 +1,144 @@
+/* -------------------------------------- */
+/* CONTENEDOR DE WIDGETS */
+/* -------------------------------------- */
+#widgets-container {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    z-index: 0;
+	
+}
+
+/* -------------------------------------- */
+/* ESTILO WIDGET REPRODUCTOR */
+/* -------------------------------------- */
+.widget-player {
+    width: 350px;
+	height: 240px;
+    background: rgba(254, 254, 254, 0.55);
+    /*backdrop-filter: blur(10px);*/
+    border-radius: 15px;
+    padding: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    color: #333;
+	border: 1px solid #ffffff;
+	text-align: center;
+	display: flex;
+	    flex-direction: column;
+	    align-items: center;
+	    justify-content: center;
+}
+.widget-player h3 {
+    margin: 0 0 0px 0;
+    font-size: 11px;
+    color: #666;
+    font-weight: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	
+	position: absolute;
+	top: 36px;
+}
+
+.widget-player h4 {
+    margin: 0 0 5px 0;
+    font-size: 12px;
+    color: #fcfcfc;
+    font-weight: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+	top: 17px;
+
+	position: absolute;
+}
+
+
+
+.widget-controls {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 0px;
+}
+
+.widget-play-btn {
+    background: rgba(254, 254, 254, 0.85);
+    border: 3px solid #BB84FF;
+    padding: 15px;
+    transition: transform 0.2s;
+	border-radius: 50%;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+	width: 115px;
+	height: 115px;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+
+    cursor: pointer;
+
+}
+
+.widget-next-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+	background: rgba(254, 254, 254, 0.85);
+	border: 2px solid #7DA8FF;
+	border-radius: 50%;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+	width: 40px;
+	height: 40px;
+	position: absolute;
+	bottom: 20px;
+	right: 30px;
+}
+
+.widget-prev-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s;
+	background: rgba(254, 254, 254, 0.85);
+	border: 2px solid #92FF7E;
+	border-radius: 50%;
+	box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+	width: 40px;
+	height: 40px;
+	bottom: 35px;
+	position: absolute;
+	bottom: 20px;
+	left: 30px;
+	display: ;
+}
+
+.widget-play-btn img {
+    width: 20px;
+    height: 20px;
+	margin-top: 2px;
+	
+}
+/*
+.widget-play-btn:hover {
+    transform: scale(1.1);
+}*/
+
+.widget-next-btn img {
+    width: 14px;
+    height: 14px;
+	margin-top: 2px;
+}
+.widget-prev-btn img {
+    width: 14px;
+    height: 14px;
+
+	margin-top: 2px;
+}
